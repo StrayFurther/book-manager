@@ -1,0 +1,70 @@
+scalar DateTime
+
+type Query {
+  allBooks(
+    author: String
+    titleContains: String
+    page: Int
+    size: Int
+  ): BookPage!
+
+  bookById(id: ID!): Book
+
+  reviewsByBookId(bookId: ID!): [Review!]!
+}
+
+type Mutation {
+  createBook(input: CreateBookInput!): Book!
+
+  updateBook(id: ID!, input: UpdateBookInput!): Book
+
+  deleteBook(id: ID!): Boolean!
+
+  addReview(input: AddReviewInput!): Review!
+}
+
+type BookPage {
+  content: [Book!]!
+  totalElements: Int!
+  totalPages: Int!
+  currentPage: Int!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  author: String!
+  isbn: String!
+  publicationYear: Int!
+  description: String
+  reviews: [Review!]!
+}
+
+type Review {
+  id: ID!
+  content: String!
+  date: DateTime!
+  rating: Int!
+  bookId: ID!
+}
+
+input CreateBookInput {
+  title: String!
+  author: String!
+  isbn: String!
+  publicationYear: Int!
+  description: String
+}
+
+# PATCH-style: only mutable fields, all optional
+input UpdateBookInput {
+  title: String
+  author: String
+  description: String
+}
+
+input AddReviewInput {
+  bookId: ID!
+  content: String!
+  rating: Int!
+}
