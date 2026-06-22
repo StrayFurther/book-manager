@@ -1,0 +1,8 @@
+node_modules
+frontend
+target
+.docker
+.git
+.vscode
+.idea
+*.log
